@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -62,10 +62,18 @@
     <div class="progress-track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="36">
       <div id="progress-bar"></div>
     </div>
+    <div class="set-indicator" aria-label="Set progress">
+      <span id="q-set-1" class="set-step active">Set I</span>
+      <span id="q-set-2" class="set-step">Set II</span>
+      <span id="q-set-3" class="set-step">Set III</span>
+    </div>
     <p id="question-label">Question 1 of 36</p>
     <p id="question-counter">Set I</p>
     <p id="question-text"></p>
-    <button id="next-btn" class="btn-primary">Next Question</button>
+    <div class="question-actions">
+      <button id="prev-btn" class="btn-primary">Previous Question</button>
+      <button id="next-btn" class="btn-primary">Next Question</button>
+    </div>
   </section>
 
   <!-- ── Finish Screen ── -->

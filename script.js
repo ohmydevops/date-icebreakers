@@ -6,7 +6,7 @@ const content = {
     metaDescription:
       "Bilingual interactive 36-question date icebreaker in English and Persian, inspired by Arthur Aron's interpersonal closeness study.",
     ogLocale: "en_US",
-    welcomeTitle: "Date Icebreakers",
+    welcomeTitle: "🥶 Date Icebreakers",
     welcomeSubtitle: "36 Questions That Lead to Love",
     welcomeDescription:
       "A scientifically designed set of 36 questions that gradually build closeness and intimacy between two people. Answer honestly, listen openly, and enjoy the journey.",
@@ -15,12 +15,13 @@ const content = {
     setLabel: "Set",
     of: "of",
     sets: ["I", "II", "III"],
+    prevBtn: "Previous Question",
     nextBtn: "Next Question",
     lastNextBtn: "Finish",
     finishBtn: "Start Over",
     finishTitle: "That's all 36 questions!",
     finishDescription:
-      "You've completed all the questions. We hope you've grown a little closer. Feel free to start again whenever you like.",
+      "You answered all the questions. Nice! Hope you had a great time together. And after all these questions and answers, don't forget the only right next step: a seriously delicious meal. Also, share this with your friends too, it might help them out!",
     referenceText: "Based on Arthur Aron's study on interpersonal closeness. Published in The Experimental Generation of Interpersonal Closeness (1997).",
     footerText: "Created on May 11, 2026 by ohmydevops - <a href=\"https://github.com/ohmydevops/date-icebreakers\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>",
     setBadges: ["Set I: Q 1-12", "Set II: Q 13-24", "Set III: Q 25-36"],
@@ -73,7 +74,7 @@ const content = {
     metaDescription:
       "وب سایت دو زبانه ۳۶ سوال برای آشنایی بهتر در قرار، بر اساس مطالعه آرتور آرون.",
     ogLocale: "fa_IR",
-    welcomeTitle: "یخ‌شکن قرار",
+    welcomeTitle: "🥶 یخ‌شکن قرار",
     welcomeSubtitle: "۳۶ سؤال که به عشق می‌رسند",
     welcomeDescription:
       "مجموعه‌ای از سوالات که به شما توی آشنایی با هم دیگه کمک میکنه. به خصوص اگر توی دیت هستی :) در لحظه جواب بدین و از زندگی لذت ببرین و خوشحال باشین چون چیزهای خوب هم هنوز توی دنیا وجود داره.",
@@ -82,12 +83,13 @@ const content = {
     setLabel: "بخش",
     of: "از",
     sets: ["اول", "دوم", "سوم"],
+    prevBtn: "سؤال قبلی",
     nextBtn: "سؤال بعدی",
     lastNextBtn: "پایان",
     finishBtn: "از ابتدا شروع کنید",
     finishTitle: "همه ۳۶ سؤال تمام شد!",
     finishDescription:
-      "تمام سؤال‌ها را گذراندید. امیدواریم کمی به هم نزدیک‌تر شده باشید. هر وقت خواستید می‌توانید دوباره شروع کنید.",
+      "تمام سؤال‌ها رو پاسخ دادین! ایول. امیدوارم که خوش گذشته باشه حسابی بهتون و فراموش نکنین بعد این همه پرسش و پاسخ یک غذای مَشتی و خوشمزه فقط جوابه. راستی به دوستای دیگه‌تونم معرفی کنین اینجا رو شاید به کارشون بیاد!",
     referenceText: "بر اساس مطالعه آرتور آرون درباره نزدیکی بین‌فردی. منتشر شده در مقاله ایجاد تجربی نزدیکی بین‌فردی (۱۹۹۷).",
     footerText: "ساخته شده در ۲۱ اردیبهشت ۱۴۰۵ توسط ohmydevops - <a href=\"https://github.com/ohmydevops/date-icebreakers\" target=\"_blank\" rel=\"noopener noreferrer\">گیتهاب</a>",
     setBadges: ["بخش اول: سوال ۱ تا ۱۲", "بخش دوم: سوال ۱۳ تا ۲۴", "بخش سوم: سوال ۲۵ تا ۳۶"],
@@ -184,6 +186,7 @@ const startBtn = document.getElementById("start-btn");
 const questionLabel = document.getElementById("question-label");
 const questionCounter = document.getElementById("question-counter");
 const questionText = document.getElementById("question-text");
+const prevBtn = document.getElementById("prev-btn");
 const nextBtn = document.getElementById("next-btn");
 const progressBar = document.getElementById("progress-bar");
 
@@ -195,6 +198,19 @@ const footerText = document.getElementById("footer-text");
 const setBadge1 = document.getElementById("set-badge-1");
 const setBadge2 = document.getElementById("set-badge-2");
 const setBadge3 = document.getElementById("set-badge-3");
+const qSet1 = document.getElementById("q-set-1");
+const qSet2 = document.getElementById("q-set-2");
+const qSet3 = document.getElementById("q-set-3");
+
+function updateSetIndicator(setIndex, t) {
+  qSet1.textContent = `${t.setLabel} ${t.sets[0]}`;
+  qSet2.textContent = `${t.setLabel} ${t.sets[1]}`;
+  qSet3.textContent = `${t.setLabel} ${t.sets[2]}`;
+
+  qSet1.classList.toggle("active", setIndex === 0);
+  qSet2.classList.toggle("active", setIndex === 1);
+  qSet3.classList.toggle("active", setIndex === 2);
+}
 
 function getLanguageFromUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -255,6 +271,7 @@ function applyLang() {
   setBadge1.textContent = t.setBadges[0];
   setBadge2.textContent = t.setBadges[1];
   setBadge3.textContent = t.setBadges[2];
+  updateSetIndicator(Math.floor(currentIndex / 12), t);
   updateSeoForLanguage(t);
   updateLanguageUrl();
 
@@ -271,8 +288,7 @@ function applyLang() {
 
 function loadSavedLanguage() {
   const langFromUrl = getLanguageFromUrl();
-  const saved = getCookie("preferredLang", "fa");
-  currentLang = langFromUrl || saved;
+  currentLang = langFromUrl || "fa";
   applyLang();
 }
 
@@ -290,6 +306,9 @@ function renderQuestion() {
   questionCounter.textContent = counterText;
   questionText.textContent = t.questions[currentIndex];
   progressBar.style.width = `${((currentIndex + 1) / total) * 100}%`;
+  updateSetIndicator(setIndex, t);
+  prevBtn.textContent = t.prevBtn;
+  prevBtn.disabled = currentIndex === 0;
 
   if (currentIndex === total - 1) {
     nextBtn.textContent = t.lastNextBtn;
@@ -313,6 +332,12 @@ langToggleBtn.addEventListener("click", () => {
 
 startBtn.addEventListener("click", () => {
   navigate("#/question/1");
+});
+
+prevBtn.addEventListener("click", () => {
+  if (currentIndex > 0) {
+    navigate(`#/question/${currentIndex}`);
+  }
 });
 
 nextBtn.addEventListener("click", () => {
