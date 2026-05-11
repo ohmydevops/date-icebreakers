@@ -4,7 +4,7 @@ const content = {
     lang: "en",
     pageTitle: "Date Icebreakers — 36 Questions",
     metaDescription:
-      "Bilingual interactive 36-question date icebreaker in English and Persian, inspired by Arthur Aron's interpersonal closeness study.",
+      "Bilingual interactive 36-question date icebreaker in English and Farsi, inspired by Arthur Aron's interpersonal closeness study.",
     ogLocale: "en_US",
     welcomeTitle: "🥶 Date Icebreakers",
     welcomeSubtitle: "36 Questions That Lead to Love",
@@ -163,13 +163,14 @@ function getCookie(name, defaultValue = null) {
 }
 
 // ── Persian Number Conversion ──────────────────
-function toPersianNumbers(str) {
+// ── Farsi Number Conversion ────────────────────
+function toFarsiNumbers(str) {
   if (currentLang !== "fa") return str;
   const englishDigits = "0123456789";
-  const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
+  const farsiDigits = "۰۱۲۳۴۵۶۷۸۹";
   let result = str;
   for (let i = 0; i < 10; i++) {
-    result = result.replace(new RegExp(englishDigits[i], "g"), persianDigits[i]);
+    result = result.replace(new RegExp(englishDigits[i], "g"), farsiDigits[i]);
   }
   return result;
 }
@@ -299,8 +300,8 @@ function renderQuestion() {
   let labelText = `${t.questionLabel} ${currentIndex + 1} ${t.of} ${total}`;
   let counterText = `${t.setLabel} ${t.sets[setIndex]}`;
   
-  labelText = toPersianNumbers(labelText);
-  counterText = toPersianNumbers(counterText);
+  labelText = toFarsiNumbers(labelText);
+  counterText = toFarsiNumbers(counterText);
   
   questionLabel.textContent = labelText;
   questionCounter.textContent = counterText;
