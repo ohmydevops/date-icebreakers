@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Date Icebreakers — 36 Questions</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Language Toggle -->
+  <button id="lang-toggle" aria-label="Toggle language">زبان | Lang</button>
+
+  <!-- ── Welcome Screen ── -->
+  <section id="welcome-screen" class="screen" aria-labelledby="welcome-title">
+    <div class="heart-icon" aria-hidden="true">💖</div>
+    <h1 id="welcome-title">Date Icebreakers</h1>
+    <p id="welcome-subtitle">36 Questions That Lead to Love</p>
+    <p id="welcome-description">
+      A scientifically designed set of 36 questions that gradually build closeness
+      and intimacy between two people. Answer honestly, listen openly, and enjoy the journey.
+    </p>
+    <div class="sets-info" aria-hidden="true">
+      <span class="set-badge">Set I · Q 1–12</span>
+      <span class="set-badge">Set II · Q 13–24</span>
+      <span class="set-badge">Set III · Q 25–36</span>
+    </div>
+    <button id="start-btn" class="btn-primary">Let's Begin</button>
+    <div class="welcome-reference">
+      <p id="reference-text"></p>
+    </div>
+  </section>
+
+  <!-- ── Question Screen ── -->
+  <section id="question-screen" class="screen hidden" aria-live="polite">
+    <div class="progress-track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="36">
+      <div id="progress-bar"></div>
+    </div>
+    <p id="question-label">Question 1 of 36</p>
+    <p id="question-counter">Set I</p>
+    <p id="question-text"></p>
+    <button id="next-btn" class="btn-primary">Next Question</button>
+  </section>
+
+  <!-- ── Finish Screen ── -->
+  <section id="finish-screen" class="screen hidden" aria-labelledby="finish-title">
+    <div class="finish-icon" aria-hidden="true">🎉</div>
+    <h2 id="finish-title">That's all 36 questions!</h2>
+    <p id="finish-description">
+      You've completed all the questions. We hope you've grown a little closer.
+      Feel free to start again whenever you like.
+    </p>
+    <button id="finish-btn" class="btn-primary">Start Over</button>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer id="footer" class="footer">
+    <p id="footer-text"></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
