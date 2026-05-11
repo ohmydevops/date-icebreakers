@@ -2,6 +2,10 @@ const content = {
   en: {
     dir: "ltr",
     lang: "en",
+    pageTitle: "Date Icebreakers — 36 Questions",
+    metaDescription:
+      "Bilingual interactive 36-question date icebreaker in English and Persian, inspired by Arthur Aron's interpersonal closeness study.",
+    ogLocale: "en_US",
     welcomeTitle: "Date Icebreakers",
     welcomeSubtitle: "36 Questions That Lead to Love",
     welcomeDescription:
@@ -65,6 +69,10 @@ const content = {
   fa: {
     dir: "rtl",
     lang: "fa",
+    pageTitle: "یخ‌شکن قرار — ۳۶ سوال",
+    metaDescription:
+      "وب سایت دو زبانه ۳۶ سوال برای آشنایی بهتر در قرار، بر اساس مطالعه آرتور آرون.",
+    ogLocale: "fa_IR",
     welcomeTitle: "یخ‌شکن قرار",
     welcomeSubtitle: "۳۶ سؤال که به عشق می‌رسند",
     welcomeDescription:
@@ -127,6 +135,8 @@ const content = {
   },
 };
 
+const BASE_URL = "https://ohmydevops.github.io/date-icebreakers/";
+
 let currentLang = "fa";
 let currentIndex = 0;
 
@@ -186,6 +196,49 @@ const setBadge1 = document.getElementById("set-badge-1");
 const setBadge2 = document.getElementById("set-badge-2");
 const setBadge3 = document.getElementById("set-badge-3");
 
+function getLanguageFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const lang = params.get("lang");
+  return lang === "en" || lang === "fa" ? lang : null;
+}
+
+function updateLanguageUrl() {
+  const url = new URL(window.location.href);
+  url.searchParams.set("lang", currentLang);
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${window.location.hash}`);
+}
+
+function updateSeoForLanguage(t) {
+  document.title = t.pageTitle;
+
+  const description = document.querySelector('meta[name="description"]');
+  if (description) description.setAttribute("content", t.metaDescription);
+
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute("content", t.pageTitle);
+
+  const ogDescription = document.querySelector('meta[property="og:description"]');
+  if (ogDescription) ogDescription.setAttribute("content", t.metaDescription);
+
+  const ogLocale = document.querySelector('meta[property="og:locale"]');
+  if (ogLocale) ogLocale.setAttribute("content", t.ogLocale);
+
+  const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+  if (twitterTitle) twitterTitle.setAttribute("content", t.pageTitle);
+
+  const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+  if (twitterDescription) twitterDescription.setAttribute("content", t.metaDescription);
+
+  const canonical = document.getElementById("canonical-url");
+  if (canonical) canonical.setAttribute("href", `${BASE_URL}?lang=${currentLang}`);
+
+  const hreflangEn = document.getElementById("hreflang-en");
+  if (hreflangEn) hreflangEn.setAttribute("href", `${BASE_URL}?lang=en`);
+
+  const hreflangFa = document.getElementById("hreflang-fa");
+  if (hreflangFa) hreflangFa.setAttribute("href", `${BASE_URL}?lang=fa`);
+}
+
 function applyLang() {
   const t = content[currentLang];
   document.documentElement.setAttribute("dir", t.dir);
@@ -202,6 +255,8 @@ function applyLang() {
   setBadge1.textContent = t.setBadges[0];
   setBadge2.textContent = t.setBadges[1];
   setBadge3.textContent = t.setBadges[2];
+  updateSeoForLanguage(t);
+  updateLanguageUrl();
 
   // Update toggle button to show opposite language
   const oppositeText = currentLang === "en" ? "فارسی" : "English";
@@ -215,8 +270,9 @@ function applyLang() {
 }
 
 function loadSavedLanguage() {
+  const langFromUrl = getLanguageFromUrl();
   const saved = getCookie("preferredLang", "fa");
-  currentLang = saved;
+  currentLang = langFromUrl || saved;
   applyLang();
 }
 
