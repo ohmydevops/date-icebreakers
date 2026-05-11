@@ -180,6 +180,17 @@ html[lang="fa"] body {
   text-align: center;
 }
 
+#reference-text a {
+  color: var(--red);
+  text-decoration: underline;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+#reference-text a:hover {
+  opacity: 0.8;
+}
+
 .btn-primary {
   display: block;
   width: 100%;

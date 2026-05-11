@@ -2,9 +2,9 @@ const content = {
   en: {
     dir: "ltr",
     lang: "en",
-    pageTitle: "Date Icebreakers — 36 Questions",
+    pageTitle: "Date Icebreakers — 36 Questions to Deepen Your Connection",
     metaDescription:
-      "Bilingual interactive 36-question date icebreaker in English and Farsi, inspired by Arthur Aron's interpersonal closeness study.",
+      "Discover authentic connection through 36 carefully crafted questions. A bilingual interactive guide in English and Farsi based on Arthur Aron's research on interpersonal closeness.",
     ogLocale: "en_US",
     welcomeTitle: "🥶 Date Icebreakers",
     welcomeSubtitle: "36 Questions That Lead to Love",
@@ -22,7 +22,7 @@ const content = {
     finishTitle: "That's all 36 questions!",
     finishDescription:
       "You answered all the questions. Nice! Hope you had a great time together. And after all these questions and answers, don't forget the only right next step: a seriously delicious meal. Also, share this with your friends too, it might help them out!",
-    referenceText: "Based on Arthur Aron's study on interpersonal closeness. Published in The Experimental Generation of Interpersonal Closeness (1997).",
+    referenceText: "Based on <a href=\"https://en.wikipedia.org/wiki/Arthur_Aron\" target=\"_blank\" rel=\"noopener noreferrer\">Arthur Aron's</a> study on interpersonal closeness. Published in The Experimental Generation of Interpersonal Closeness (1997).",
     footerText: "Created on May 11, 2026 by ohmydevops - <a href=\"https://github.com/ohmydevops/date-icebreakers\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>",
     setBadges: ["Set I: Q 1-12", "Set II: Q 13-24", "Set III: Q 25-36"],
     questions: [
@@ -70,9 +70,9 @@ const content = {
   fa: {
     dir: "rtl",
     lang: "fa",
-    pageTitle: "یخ‌شکن قرار — ۳۶ سوال",
+    pageTitle: "یخ‌شکن قرار — ۳۶ سؤالی برای نزدیکتر شدن",
     metaDescription:
-      "وب سایت دو زبانه ۳۶ سوال برای آشنایی بهتر در قرار، بر اساس مطالعه آرتور آرون.",
+      "سایت دو زبانه ۳۶ سؤال برای آشنایی و نزدیکی بیشتر بین دو نفر. بر اساس مطالعه معروف آرتور آرون درباره رابطه‌های انسانی عمیق و درونی.",
     ogLocale: "fa_IR",
     welcomeTitle: "🥶 یخ‌شکن قرار",
     welcomeSubtitle: "۳۶ سؤال که به عشق می‌رسند",
@@ -90,7 +90,7 @@ const content = {
     finishTitle: "همه ۳۶ سؤال تمام شد!",
     finishDescription:
       "تمام سؤال‌ها رو پاسخ دادین! ایول. امیدوارم که خوش گذشته باشه حسابی بهتون و فراموش نکنین بعد این همه پرسش و پاسخ یک غذای مَشتی و خوشمزه فقط جوابه. راستی به دوستای دیگه‌تونم معرفی کنین اینجا رو شاید به کارشون بیاد!",
-    referenceText: "بر اساس مطالعه آرتور آرون درباره نزدیکی بین‌فردی. منتشر شده در مقاله ایجاد تجربی نزدیکی بین‌فردی (۱۹۹۷).",
+    referenceText: "بر اساس مطالعه <a href=\"https://en.wikipedia.org/wiki/Arthur_Aron\" target=\"_blank\" rel=\"noopener noreferrer\">آرتور آرون</a> درباره نزدیکی بین‌فردی. منتشر شده در مقاله ایجاد تجربی نزدیکی بین‌فردی (۱۹۹۷).",
     footerText: "ساخته شده در ۲۱ اردیبهشت ۱۴۰۵ توسط ohmydevops - <a href=\"https://github.com/ohmydevops/date-icebreakers\" target=\"_blank\" rel=\"noopener noreferrer\">گیتهاب</a>",
     setBadges: ["بخش اول: سوال ۱ تا ۱۲", "بخش دوم: سوال ۱۳ تا ۲۴", "بخش سوم: سوال ۲۵ تا ۳۶"],
     questions: [
@@ -267,7 +267,7 @@ function applyLang() {
   finishTitle.textContent = t.finishTitle;
   finishDescription.textContent = t.finishDescription;
   finishBtn.textContent = t.finishBtn;
-  referenceText.textContent = t.referenceText;
+  referenceText.innerHTML = t.referenceText;
   footerText.innerHTML = t.footerText;
   setBadge1.textContent = t.setBadges[0];
   setBadge2.textContent = t.setBadges[1];
