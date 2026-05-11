@@ -12,4 +12,4 @@ Open `http://localhost:8000`.
 
 Sources:
 - https://amorebeautifulquestion.com/36-questions/
-- https://en.wikipedia.org/wiki/The_36_questions_to_fall_in_love
+- https://en.wikipedia.org/wiki/Arthur_Aron
