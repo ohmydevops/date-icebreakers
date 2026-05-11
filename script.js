@@ -193,7 +193,10 @@ startBtn.addEventListener("click", () => {
   questionText.classList.remove("fade-in");
   // Force reflow so removing and re-adding the class restarts the CSS animation
   questionText.offsetWidth; // eslint-disable-line no-unused-expressions
-  questionText.classList.add("fade-in");("click", () => {
+  questionText.classList.add("fade-in");
+});
+
+nextBtn.addEventListener("click", () => {
   const total = content[currentLang].questions.length;
   if (currentIndex === total - 1) {
     showScreen(finishScreen);
