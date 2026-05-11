@@ -11,6 +11,7 @@ const content = {
     questionLabel: "Question",
     of: "of",
     nextBtn: "Next Question",
+    lastNextBtn: "Finish",
     finishBtn: "Start Over",
     finishTitle: "That's all 36 questions!",
     finishDescription:
@@ -69,6 +70,7 @@ const content = {
     questionLabel: "سؤال",
     of: "از",
     nextBtn: "سؤال بعدی",
+    lastNextBtn: "پایان",
     finishBtn: "از ابتدا شروع کنید",
     finishTitle: "همه ۳۶ سؤال تمام شد!",
     finishDescription:
@@ -166,7 +168,7 @@ function renderQuestion() {
   progressBar.style.width = `${((currentIndex + 1) / total) * 100}%`;
 
   if (currentIndex === total - 1) {
-    nextBtn.textContent = t.finishBtn;
+    nextBtn.textContent = t.lastNextBtn;
   } else {
     nextBtn.textContent = t.nextBtn;
   }
@@ -189,11 +191,9 @@ startBtn.addEventListener("click", () => {
   showScreen(questionScreen);
   renderQuestion();
   questionText.classList.remove("fade-in");
-  void questionText.offsetWidth;
-  questionText.classList.add("fade-in");
-});
-
-nextBtn.addEventListener("click", () => {
+  // Force reflow so removing and re-adding the class restarts the CSS animation
+  questionText.offsetWidth; // eslint-disable-line no-unused-expressions
+  questionText.classList.add("fade-in");("click", () => {
   const total = content[currentLang].questions.length;
   if (currentIndex === total - 1) {
     showScreen(finishScreen);
@@ -202,7 +202,8 @@ nextBtn.addEventListener("click", () => {
   }
   currentIndex++;
   questionText.classList.remove("fade-in");
-  void questionText.offsetWidth;
+  // Force reflow so removing and re-adding the class restarts the CSS animation
+  questionText.offsetWidth; // eslint-disable-line no-unused-expressions
   questionText.classList.add("fade-in");
   renderQuestion();
 });
