@@ -9,7 +9,7 @@
 <body>
 
   <!-- Language Toggle -->
-  <button id="lang-toggle" aria-label="Toggle language">فارسی</button>
+  <button id="lang-toggle" aria-label="Toggle language">زبان | Lang</button>
 
   <!-- ── Welcome Screen ── -->
   <section id="welcome-screen" class="screen" aria-labelledby="welcome-title">
@@ -26,6 +26,9 @@
       <span class="set-badge">Set III · Q 25–36</span>
     </div>
     <button id="start-btn" class="btn-primary">Let's Begin</button>
+    <div class="welcome-reference">
+      <p id="reference-text"></p>
+    </div>
   </section>
 
   <!-- ── Question Screen ── -->
@@ -34,6 +37,7 @@
       <div id="progress-bar"></div>
     </div>
     <p id="question-label">Question 1 of 36</p>
+    <p id="question-counter">Set I</p>
     <p id="question-text"></p>
     <button id="next-btn" class="btn-primary">Next Question</button>
   </section>
@@ -48,6 +52,11 @@
     </p>
     <button id="finish-btn" class="btn-primary">Start Over</button>
   </section>
+
+  <!-- ── Footer ── -->
+  <footer id="footer" class="footer">
+    <p id="footer-text"></p>
+  </footer>
 
   <script src="script.js"></script>
 </body>

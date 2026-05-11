@@ -2,20 +2,23 @@ const content = {
   en: {
     dir: "ltr",
     lang: "en",
-    langToggleLabel: "فارسی",
     welcomeTitle: "Date Icebreakers",
     welcomeSubtitle: "36 Questions That Lead to Love",
     welcomeDescription:
       "A scientifically designed set of 36 questions that gradually build closeness and intimacy between two people. Answer honestly, listen openly, and enjoy the journey.",
     startBtn: "Let's Begin",
     questionLabel: "Question",
+    setLabel: "Set",
     of: "of",
+    sets: ["I", "II", "III"],
     nextBtn: "Next Question",
     lastNextBtn: "Finish",
     finishBtn: "Start Over",
     finishTitle: "That's all 36 questions!",
     finishDescription:
       "You've completed all the questions. We hope you've grown a little closer. Feel free to start again whenever you like.",
+    referenceText: "Based on Arthur Aron's study on interpersonal closeness. Published in The Experimental Generation of Interpersonal Closeness (1997).",
+    footerText: "Created on May 11, 2026 by ohmydevops - <a href=\"https://github.com/ohmydevops/date-icebreakers\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>",
     questions: [
       // Set I
       "Given the choice of anyone in the world, whom would you want as a dinner guest?",
@@ -61,20 +64,23 @@ const content = {
   fa: {
     dir: "rtl",
     lang: "fa",
-    langToggleLabel: "English",
     welcomeTitle: "یخ‌شکن قرار",
     welcomeSubtitle: "۳۶ سؤال که به عشق می‌رسند",
     welcomeDescription:
       "مجموعه‌ای علمی از ۳۶ سؤال که به تدریج صمیمیت و نزدیکی بین دو نفر را ایجاد می‌کند. صادقانه پاسخ دهید، با دقت گوش دهید و از این سفر لذت ببرید.",
     startBtn: "شروع کنیم",
     questionLabel: "سؤال",
+    setLabel: "بخش",
     of: "از",
+    sets: ["اول", "دوم", "سوم"],
     nextBtn: "سؤال بعدی",
     lastNextBtn: "پایان",
     finishBtn: "از ابتدا شروع کنید",
     finishTitle: "همه ۳۶ سؤال تمام شد!",
     finishDescription:
       "تمام سؤال‌ها را گذراندید. امیدواریم کمی به هم نزدیک‌تر شده باشید. هر وقت خواستید می‌توانید دوباره شروع کنید.",
+    referenceText: "بر اساس مطالعه آرتور آرون درباره نزدیکی بین‌فردی. منتشر شده در مقاله ایجاد تجربی نزدیکی بین‌فردی (۱۹۹۷).",
+    footerText: "ساخته شده در ۲۱ اردیبهشت ۱۴۰۵ توسط ohmydevops - <a href=\"https://github.com/ohmydevops/date-icebreakers\" target=\"_blank\" rel=\"noopener noreferrer\">گیتهاب</a>",
     questions: [
       // Set I
       "اگر می‌توانستید هر کسی را در دنیا انتخاب کنید، چه کسی را به عنوان مهمان شام می‌خواستید؟",
@@ -119,8 +125,40 @@ const content = {
   },
 };
 
-let currentLang = "en";
+let currentLang = "fa";
 let currentIndex = 0;
+
+// ── Cookie Helpers ──────────────────────────────
+function setCookie(name, value, days = 365) {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = `${name}=${value}; ${expires}; path=/`;
+}
+
+function getCookie(name, defaultValue = null) {
+  const nameEQ = name + "=";
+  const cookies = document.cookie.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.indexOf(nameEQ) === 0) {
+      return cookie.substring(nameEQ.length);
+    }
+  }
+  return defaultValue;
+}
+
+// ── Persian Number Conversion ──────────────────
+function toPersianNumbers(str) {
+  if (currentLang !== "fa") return str;
+  const englishDigits = "0123456789";
+  const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
+  let result = str;
+  for (let i = 0; i < 10; i++) {
+    result = result.replace(new RegExp(englishDigits[i], "g"), persianDigits[i]);
+  }
+  return result;
+}
 
 const welcomeScreen = document.getElementById("welcome-screen");
 const questionScreen = document.getElementById("question-screen");
@@ -141,13 +179,14 @@ const progressBar = document.getElementById("progress-bar");
 const finishTitle = document.getElementById("finish-title");
 const finishDescription = document.getElementById("finish-description");
 const finishBtn = document.getElementById("finish-btn");
+const referenceText = document.getElementById("reference-text");
+const footerText = document.getElementById("footer-text");
 
 function applyLang() {
   const t = content[currentLang];
   document.documentElement.setAttribute("dir", t.dir);
   document.documentElement.setAttribute("lang", t.lang);
 
-  langToggleBtn.textContent = t.langToggleLabel;
   welcomeTitle.textContent = t.welcomeTitle;
   welcomeSubtitle.textContent = t.welcomeSubtitle;
   welcomeDescription.textContent = t.welcomeDescription;
@@ -155,15 +194,38 @@ function applyLang() {
   finishTitle.textContent = t.finishTitle;
   finishDescription.textContent = t.finishDescription;
   finishBtn.textContent = t.finishBtn;
+  referenceText.textContent = t.referenceText;
+  footerText.innerHTML = t.footerText;
+
+  // Update toggle button to show opposite language
+  const oppositeText = currentLang === "en" ? "فارسی" : "English";
+  langToggleBtn.textContent = oppositeText;
+
+  // Save language preference to cookie
+  setCookie("preferredLang", currentLang);
 
   if (!welcomeScreen.classList.contains("hidden")) return;
   renderQuestion();
 }
 
+function loadSavedLanguage() {
+  const saved = getCookie("preferredLang", "fa");
+  currentLang = saved;
+  applyLang();
+}
+
 function renderQuestion() {
   const t = content[currentLang];
   const total = t.questions.length;
-  questionLabel.textContent = `${t.questionLabel} ${currentIndex + 1} ${t.of} ${total}`;
+  const setIndex = Math.floor(currentIndex / 12);
+  let labelText = `${t.questionLabel} ${currentIndex + 1} ${t.of} ${total}`;
+  let counterText = `${t.setLabel} ${t.sets[setIndex]}`;
+  
+  labelText = toPersianNumbers(labelText);
+  counterText = toPersianNumbers(counterText);
+  
+  questionLabel.textContent = labelText;
+  questionCounter.textContent = counterText;
   questionText.textContent = t.questions[currentIndex];
   progressBar.style.width = `${((currentIndex + 1) / total) * 100}%`;
 
@@ -184,37 +246,61 @@ function showScreen(screen) {
 langToggleBtn.addEventListener("click", () => {
   currentLang = currentLang === "en" ? "fa" : "en";
   applyLang();
+  router();
 });
 
 startBtn.addEventListener("click", () => {
-  currentIndex = 0;
-  showScreen(questionScreen);
-  renderQuestion();
-  questionText.classList.remove("fade-in");
-  // Force reflow so removing and re-adding the class restarts the CSS animation
-  questionText.offsetWidth; // eslint-disable-line no-unused-expressions
-  questionText.classList.add("fade-in");
+  navigate("#/question/1");
 });
 
 nextBtn.addEventListener("click", () => {
   const total = content[currentLang].questions.length;
   if (currentIndex === total - 1) {
-    showScreen(finishScreen);
-    applyLang();
+    navigate("#/finish");
     return;
   }
-  currentIndex++;
-  questionText.classList.remove("fade-in");
-  // Force reflow so removing and re-adding the class restarts the CSS animation
-  questionText.offsetWidth; // eslint-disable-line no-unused-expressions
-  questionText.classList.add("fade-in");
-  renderQuestion();
+  navigate(`#/question/${currentIndex + 2}`);
 });
 
 finishBtn.addEventListener("click", () => {
-  currentIndex = 0;
-  showScreen(welcomeScreen);
+  navigate("#/");
+});
+
+// ── Routing ─────────────────────────────────────
+function navigate(hash) {
+  window.location.hash = hash;
+  router();
+}
+
+function router() {
+  const hash = window.location.hash || "#/";
+  const questionMatch = hash.match(/#\/question\/(\d+)/);
+  
+  if (questionMatch) {
+    const id = parseInt(questionMatch[1]) - 1;
+    if (id >= 0 && id < content[currentLang].questions.length) {
+      currentIndex = id;
+      showScreen(questionScreen);
+      renderQuestion();
+      questionText.classList.remove("fade-in");
+      questionText.offsetWidth;
+      questionText.classList.add("fade-in");
+    } else {
+      navigate("#/");
+    }
+  } else if (hash === "#/finish") {
+    showScreen(finishScreen);
+    applyLang();
+  } else {
+    currentIndex = 0;
+    showScreen(welcomeScreen);
+  }
+}
+
+window.addEventListener("hashchange", () => {
+  router();
 });
 
 // Init
-applyLang();
+loadSavedLanguage();
+router();
