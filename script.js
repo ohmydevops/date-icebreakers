@@ -279,6 +279,12 @@ function applyLang() {
   langToggleBtn.title = nextLanguage;
   langToggleBtn.classList.toggle("is-fa-label", nextLanguage === "فارسی");
 
+  // Swap manifest for correct install-prompt language
+  const manifestLink = document.getElementById("manifest-link");
+  if (manifestLink) {
+    manifestLink.href = currentLang === "en" ? "manifest.en.json" : "manifest.fa.json";
+  }
+
   // Save language preference to cookie
   setCookie("preferredLang", currentLang);
 
@@ -410,3 +416,10 @@ window.addEventListener("hashchange", () => {
 // Init
 loadSavedLanguage();
 router();
+
+// Service Worker
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js");
+  });
+}

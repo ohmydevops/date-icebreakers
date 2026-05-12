@@ -1,0 +1,19 @@
+{
+  "name": "یخ‌شکن قرار",
+  "short_name": "یخ‌شکن",
+  "description": "۳۶ سوال برای عمیق‌تر کردن ارتباط",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#c8102e",
+  "lang": "fa",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
