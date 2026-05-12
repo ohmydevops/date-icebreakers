@@ -7,6 +7,7 @@ const ASSETS = [
   "./manifest.en.json",
   "./manifest.fa.json",
   "./image.png",
+  "./icon.png",
   "./fonts/vazir/Vazir-Regular-UI.woff2",
   "./fonts/vazir/Vazir-Medium-UI.woff2",
   "./fonts/vazir/Vazir-Bold-UI.woff2",
