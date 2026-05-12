@@ -276,9 +276,11 @@ function applyLang() {
   updateSeoForLanguage(t);
   updateLanguageUrl();
 
-  // Update toggle button to show opposite language
-  const oppositeText = currentLang === "en" ? "فارسی" : "English";
-  langToggleBtn.textContent = oppositeText;
+  // Show the opposite language on the button.
+  const nextLanguage = currentLang === "en" ? "فارسی" : "English";
+  langToggleBtn.textContent = nextLanguage;
+  langToggleBtn.title = nextLanguage;
+  langToggleBtn.classList.toggle("is-fa-label", nextLanguage === "فارسی");
 
   // Save language preference to cookie
   setCookie("preferredLang", currentLang);
@@ -329,6 +331,21 @@ langToggleBtn.addEventListener("click", () => {
   currentLang = currentLang === "en" ? "fa" : "en";
   applyLang();
   router();
+});
+
+// Dark Mode Toggle
+const themeToggleBtn = document.getElementById("theme-toggle");
+const loadTheme = () => {
+  const savedTheme = localStorage.getItem("theme") || "light";
+  if (savedTheme === "dark") {
+    document.documentElement.classList.add("dark-mode");
+  }
+};
+loadTheme();
+themeToggleBtn.addEventListener("click", () => {
+  document.documentElement.classList.toggle("dark-mode");
+  const isDark = document.documentElement.classList.contains("dark-mode");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
 });
 
 startBtn.addEventListener("click", () => {
