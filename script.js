@@ -7,7 +7,6 @@ const content = {
       "Discover authentic connection through 36 carefully crafted questions. A bilingual interactive guide in English and Farsi based on Arthur Aron's research on interpersonal closeness.",
     ogLocale: "en_US",
     welcomeTitle: "🥶 Date Icebreakers",
-    welcomeSubtitle: "36 Questions That Lead to Love",
     welcomeDescription:
       "A scientifically designed set of 36 questions that gradually build closeness and intimacy between two people. Answer honestly, listen openly, and enjoy the journey.",
     startBtn: "Let's Begin",
@@ -75,7 +74,6 @@ const content = {
       "سایت دو زبانه ۳۶ سؤال برای آشنایی و نزدیکی بیشتر بین دو نفر. بر اساس مطالعه معروف آرتور آرون درباره رابطه‌های انسانی عمیق و درونی.",
     ogLocale: "fa_IR",
     welcomeTitle: "🥶 یخ‌شکن قرار",
-    welcomeSubtitle: "۳۶ سؤال که به عشق می‌رسند",
     welcomeDescription:
       "مجموعه‌ای از سوالات که به شما توی آشنایی با هم دیگه کمک میکنه. به خصوص اگر توی دیت هستی :) در لحظه جواب بدین و از زندگی لذت ببرین و خوشحال باشین چون چیزهای خوب هم هنوز توی دنیا وجود داره.",
     startBtn: "شروع کنیم",
@@ -150,19 +148,18 @@ function setCookie(name, value, days = 365) {
   document.cookie = `${name}=${value}; ${expires}; path=/`;
 }
 
-function getCookie(name, defaultValue = null) {
+function getCookie(name) {
   const nameEQ = name + "=";
   const cookies = document.cookie.split(";");
   for (let i = 0; i < cookies.length; i++) {
-    let cookie = cookies[i].trim();
+    const cookie = cookies[i].trim();
     if (cookie.indexOf(nameEQ) === 0) {
       return cookie.substring(nameEQ.length);
     }
   }
-  return defaultValue;
+  return null;
 }
 
-// ── Persian Number Conversion ──────────────────
 // ── Farsi Number Conversion ────────────────────
 function toFarsiNumbers(str) {
   if (currentLang !== "fa") return str;
@@ -291,7 +288,11 @@ function applyLang() {
 
 function loadSavedLanguage() {
   const langFromUrl = getLanguageFromUrl();
-  currentLang = langFromUrl || "fa";
+  const langFromCookie = getCookie("preferredLang");
+  const validCookieLang = langFromCookie === "en" || langFromCookie === "fa" ? langFromCookie : null;
+
+  // Priority: URL param > saved cookie > default
+  currentLang = langFromUrl || validCookieLang || "fa";
   applyLang();
 }
 

@@ -93,11 +93,6 @@ html[lang="fa"] body {
   z-index: 100;
 }
 
-[dir="rtl"] .controls {
-  right: 1rem;
-  left: auto;
-}
-
 #lang-toggle,
 #theme-toggle {
   background: #ffffff;
@@ -166,26 +161,12 @@ html.dark-mode #theme-toggle {
   display: none !important;
 }
 
-.heart-icon {
-  font-size: 1.9rem;
-  text-align: center;
-  margin-bottom: 0.8rem;
-}
-
 #welcome-title {
   text-align: center;
   font-size: clamp(1.85rem, 4.2vw, 2.35rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 0.35rem;
-}
-
-#welcome-subtitle {
-  text-align: center;
-  font-size: 1rem;
-  color: var(--red);
-  letter-spacing: 0.02em;
-  margin-bottom: 1.1rem;
 }
 
 #welcome-description {
@@ -419,12 +400,7 @@ html.dark-mode .set-step.active {
   margin-bottom: 2rem;
 }
 
-[dir="rtl"] body {
-  font-family: var(--font-fa);
-}
-
 [dir="rtl"] #welcome-title,
-[dir="rtl"] #welcome-subtitle,
 [dir="rtl"] #welcome-description,
 [dir="rtl"] #question-text,
 [dir="rtl"] #finish-title,
