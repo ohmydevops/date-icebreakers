@@ -30,8 +30,10 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
-  // Only handle GET requests for same-origin assets
+  // Only handle GET requests for same-origin assets and http(s) scheme
   if (e.request.method !== "GET") return;
+  const url = new URL(e.request.url);
+  if (url.protocol !== "http:" && url.protocol !== "https:") return;
 
   e.respondWith(
     caches.match(e.request).then((cached) => {
